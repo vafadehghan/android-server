@@ -177,13 +177,13 @@ function loop() {
         },
         map: map,
         label: {
-          color: 'black',
+          color: 'white',
           fontWeight: 'bold',
           text: title
         },
         icon: {
           labelOrigin: new google.maps.Point(15, 50),
-          url: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+          url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
           size: new google.maps.Size(30, 40),
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(15, 40),
