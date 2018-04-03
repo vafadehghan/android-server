@@ -152,7 +152,7 @@ function loop() {
 
   var Httpreq = new XMLHttpRequest();
 
-  Httpreq.open("GET", "http://192.168.1.68:8080/json?password=dc4985", false);
+  Httpreq.open("GET", "http://159.89.115.34/json?password=dc4985", false);
   Httpreq.send(null);
 
   json = JSON.parse(Httpreq.responseText);
