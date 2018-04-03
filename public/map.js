@@ -167,7 +167,7 @@ function loop() {
       x = t.point.x;
       y = t.point.y;
       name = t.name;
-
+      var title = '' + t.ip.substring(7) +'' + name;
       console.log("name: " + name + " (" + x + "," + y + ")");
 
       var marker = new google.maps.Marker({
@@ -179,7 +179,7 @@ function loop() {
         label: {
           color: 'black',
           fontWeight: 'bold',
-          text: '' + t.ip '' + (name);
+          text: title
         },
         icon: {
           labelOrigin: new google.maps.Point(15, 50),
