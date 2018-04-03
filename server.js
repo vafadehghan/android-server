@@ -65,7 +65,12 @@ function handle_connection(connection) {
   }
 
   function on_close() {
+	clients[connection.remoteAddress].name = 0;
+    clients[connection.remoteAddress].point.x = 0;
+    clients[connection.remoteAddress].point.y = 0;
     log('connection closed: ' + remoteAddress);
+	
+	
   }
 
   function on_error(err) {
