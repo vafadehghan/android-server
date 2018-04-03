@@ -179,7 +179,7 @@ function loop() {
         label: {
           color: 'black',
           fontWeight: 'bold',
-          text: name
+          text: '' + t.ip '' + (name);
         },
         icon: {
           labelOrigin: new google.maps.Point(15, 50),
