@@ -65,9 +65,6 @@ function handle_connection(connection) {
   }
 
   function on_close() {
-	//clients[connection.remoteAddress].name = 0;
-    //clients[connection.remoteAddress].point.x = 0;
-    //clients[connection.remoteAddress].point.y = 0;
     delete clients[connection.remoteAddress]; 
 	log('connection closed: ' + remoteAddress);
 	
