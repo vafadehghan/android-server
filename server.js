@@ -1,6 +1,5 @@
 var net = require('net');
-var timestamp = require('console-timestamp');
-var express = require('express');
+=var express = require('express');
 var path = require('path');
 var app = express();
 
@@ -29,14 +28,14 @@ function handle_connection(connection) {
   var remoteAddress = connection.remoteAddress + ':' + connection.remotePort;
   console.log('new client connection from: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
-  connection.on('data', on_connection);
-  connection.once('close', on_close);
-  connection.on('error', on_error);
+  connection.on('data', clientConnected);
+  connection.on('error', error);
+  connection.once('close', clientDisconnect);
 
   clients[connection.remoteAddress] = client("name", 0, 0, connection.remoteAddress);
   console.log(clients[connection.remoteAddress] + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
-  function on_connection(d) {
+  function clientConnected(d) {
     console.log('Address: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
     console.log('Data: ' + d + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
@@ -56,20 +55,18 @@ function handle_connection(connection) {
     connection.write(d);
   }
 
-  function on_close() {
+  function clientDisconnect() {
     delete clients[connection.remoteAddress];
     console.log('connection closed: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
 
   }
 
-  function on_error(err) {
+  function error(err) {
     console.log('err' + remoteAddress + " " + err.message + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
   }
 
 }
-
-
 
 app.set('views', __dirname + '/views');
 app.use(express.static('public'));
@@ -79,7 +76,8 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + "/index.html"));
 });
 
-app.get('/json', function(req, res) {
+app.get('/data', function(req, res) {
+
 
   var password = req.query.password;
 
