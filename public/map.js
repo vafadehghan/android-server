@@ -164,8 +164,8 @@ function loop() {
 
       var t = json[i][j];
 
-      x = t.point.x;
-      y = t.point.y;
+      x = t.x;
+      y = t.y;
       name = t.name;
       var title = '' + t.ip.substring(7) +' ' + name;
       console.log("name: " + name + " (" + x + "," + y + ")");
