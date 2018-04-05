@@ -1,5 +1,5 @@
 var net = require('net');
-=var express = require('express');
+var express = require('express');
 var path = require('path');
 var app = express();
 
@@ -17,14 +17,14 @@ var client = function(name, x, y, ip) {
 
 
 var server = net.createServer();
-server.on('connection', handle_connection);
+server.on('connection', newConnection);
 
 server.listen(9000, function() {
   console.log('server listening to: ' + JSON.stringify(server.address()) + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 });
 
 
-function handle_connection(connection) {
+function newConnection(connection) {
   var remoteAddress = connection.remoteAddress + ':' + connection.remotePort;
   console.log('new client connection from: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
@@ -33,7 +33,6 @@ function handle_connection(connection) {
   connection.once('close', clientDisconnect);
 
   clients[connection.remoteAddress] = client("name", 0, 0, connection.remoteAddress);
-  console.log(clients[connection.remoteAddress] + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
   function clientConnected(d) {
     console.log('Address: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
@@ -93,4 +92,4 @@ app.get('/data', function(req, res) {
   }
 });
 
-app.listen(80);
+app.listen(8080);

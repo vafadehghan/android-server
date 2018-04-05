@@ -5,8 +5,6 @@ var name;
 var markers = [];
 var map;
 
-// var password = prompt("what is the password?", "");
-
 function clearOverlays() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
