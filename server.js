@@ -21,24 +21,24 @@ var server = net.createServer();
 server.on('connection', handle_connection);
 
 server.listen(9000, function() {
-  console.log('server listening to: ' + JSON.stringify(server.address()) +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+  console.log('server listening to: ' + JSON.stringify(server.address()) + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 });
 
 
 function handle_connection(connection) {
   var remoteAddress = connection.remoteAddress + ':' + connection.remotePort;
-  console.log('new client connection from: ' + remoteAddress +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+  console.log('new client connection from: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
   connection.on('data', on_connection);
   connection.once('close', on_close);
   connection.on('error', on_error);
 
   clients[connection.remoteAddress] = client("name", 0, 0, connection.remoteAddress);
-  console.log(clients[connection.remoteAddress] +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+  console.log(clients[connection.remoteAddress] + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
   function on_connection(d) {
-    console.log('Address: ' + remoteAddress +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
-    console.log('Data: ' + d +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+    console.log('Address: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+    console.log('Data: ' + d + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
     var data = "" + d;
     var message = data.split("_");
@@ -47,25 +47,24 @@ function handle_connection(connection) {
     var client_x = message[1];
     var client_y = message[2];
 
-    console.log("-> " + name + " x:" + client_x + " y:" + client_y +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+    console.log("-> " + name + " x:" + client_x + " y:" + client_y + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
     clients[connection.remoteAddress].name = name;
     clients[connection.remoteAddress].x = client_x;
     clients[connection.remoteAddress].y = client_y;
 
-    console.log(clients +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
     connection.write(d);
   }
 
   function on_close() {
     delete clients[connection.remoteAddress];
-    console.log('connection closed: ' + remoteAddress +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+    console.log('connection closed: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
 
   }
 
   function on_error(err) {
-    console.log('err' + remoteAddress + " " + err.message +" " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+    console.log('err' + remoteAddress + " " + err.message + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
   }
 
 }
