@@ -1,58 +1,9 @@
-/*---------------------------------------------------------------------------------------
---	SOURCE FILE: map.js - The Google Maps API caller
---
---	PROGRAM:     Location Finder
---
---	DATE:        April 5, 2018
---
---	FUNCTIONS:
---					int main (int argc, char **argv)
---					void* readThreadFunc()
---					void* sendThreadFunc()
---					void printFunc()
---					void signal_catcher(int signo)
---
---
---	DESIGNERS:		Vafa Dehghan Saei
---
---	PROGRAMMERS:	Vafa Dehghan Saei
---
---
---	NOTES:
---	The program will establish a TCP connection to a user specifed server.
---  The server can be specified using a fully qualified domain name or and
---	IP address. After the connection has been established the user can type
---  messages to be sent to other connected clients. The client will also
---  display any incoming message sent from other clients through the server.
----------------------------------------------------------------------------------------*/
-
 var x = 0;
 var y = 0;
-var userName;
+var name;
 var markers = [];
 var map;
 
-/*----------------------------------------------------------------------
--- FUNCTION:	  newConnection
---
--- DATE:        April 5, 2018
---
--- DESIGNER:    Vafa Dehghan Saei
---
--- PROGRAMMER:  Vafa Dehghan Saei
---
--- INTERFACE: 	function newConnection(connection)
---
--- ARGUMENT:    var connection - an object representing a connected client
---
---
--- RETURNS:     void
---
--- NOTES:
--- When there is a new connection this function will run.
--- The clients address is printed to the console.
--- This function will also define the functions to handle the new data, disconnect and error events.
-----------------------------------------------------------------------*/
 function clearOverlays() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
@@ -60,27 +11,6 @@ function clearOverlays() {
   markers.length = 0;
 }
 
-/*----------------------------------------------------------------------
--- FUNCTION:	  newConnection
---
--- DATE:        April 5, 2018
---
--- DESIGNER:    Vafa Dehghan Saei
---
--- PROGRAMMER:  Vafa Dehghan Saei
---
--- INTERFACE: 	function newConnection(connection)
---
--- ARGUMENT:    var connection - an object representing a connected client
---
---
--- RETURNS:     void
---
--- NOTES:
--- When there is a new connection this function will run.
--- The clients address is printed to the console.
--- This function will also define the functions to handle the new data, disconnect and error events.
-----------------------------------------------------------------------*/
 function initMap() {
 
   var mapOptions = {
@@ -214,27 +144,7 @@ function initMap() {
 }
 
 setInterval(loop, 1000);
-/*----------------------------------------------------------------------
--- FUNCTION:	  newConnection
---
--- DATE:        April 5, 2018
---
--- DESIGNER:    Vafa Dehghan Saei
---
--- PROGRAMMER:  Vafa Dehghan Saei
---
--- INTERFACE: 	function newConnection(connection)
---
--- ARGUMENT:    var connection - an object representing a connected client
---
---
--- RETURNS:     void
---
--- NOTES:
--- When there is a new connection this function will run.
--- The clients address is printed to the console.
--- This function will also define the functions to handle the new data, disconnect and error events.
-----------------------------------------------------------------------*/
+
 function loop() {
 
   var Httpreq = new XMLHttpRequest();
@@ -244,8 +154,7 @@ function loop() {
 
   json = JSON.parse(Httpreq.responseText);
 
-  setMapOnAll(null);
-  markers = [];
+  deleteMarkers();
 
   for (i in json) {
     for (j in json[i]) {
@@ -254,9 +163,9 @@ function loop() {
 
       x = t.x;
       y = t.y;
-      userName = t.name;
-      var title = '' + t.ip.substring(7) + ' ' + userName;
-      console.log("name: " + userName + " (" + x + "," + y + ")");
+      name = t.name;
+      var title = '' + t.ip.substring(7) +' ' + name;
+      console.log("name: " + name + " (" + x + "," + y + ")");
 
       var marker = new google.maps.Marker({
         position: {
@@ -287,32 +196,32 @@ function loop() {
   }
 
   setMapOnAll(map);
+  showMarkers();
+
 }
 
-/*----------------------------------------------------------------------
--- FUNCTION:	  newConnection
---
--- DATE:        April 5, 2018
---
--- DESIGNER:    Vafa Dehghan Saei
---
--- PROGRAMMER:  Vafa Dehghan Saei
---
--- INTERFACE: 	function newConnection(connection)
---
--- ARGUMENT:    var connection - an object representing a connected client
---
---
--- RETURNS:     void
---
--- NOTES:
--- When there is a new connection this function will run.
--- The clients address is printed to the console.
--- This function will also define the functions to handle the new data, disconnect and error events.
-----------------------------------------------------------------------*/
+
+// GMAPS TOOLS
+
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setMapOnAll(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
 }
