@@ -6,10 +6,9 @@
 --	DATE:        April 5, 2018
 --
 --	FUNCTIONS:
---					function newConnection(connection)
---					function clientConnected(d)
---          function clientDisconnect()
---					function error(err)
+--					function initMap()
+--					function loop()
+--          function setMapOnAll(map)
 --
 --
 --	DESIGNERS:		Vafa Dehghan Saei
@@ -18,10 +17,8 @@
 --
 --
 --	NOTES:
---  This program will create a server that will listen on port 9000.
---  The program will make an entry into the client dictionary with the location and name of the client.
---  It will then add the location and name to the JSON file which will be read by the map.
---  Once the client is disconnected the entry is removed from the JSON.
+--  This script will show a map that is centered on BCIT.
+--  The script will parse through the JSON file and display the markers on the map.
 ---------------------------------------------------------------------------------------*/
 var x = 0;
 var y = 0;
@@ -29,14 +26,34 @@ var name;
 var markers = [];
 var map;
 
+/*----------------------------------------------------------------------
+-- FUNCTION:	  initMap
+--
+-- DATE:        April 5, 2018
+--
+-- DESIGNER:    Vafa Dehghan Saei
+--
+-- PROGRAMMER:  Vafa Dehghan Saei
+--
+-- INTERFACE: 	function initMap()
+--
+-- ARGUMENT:    void
+--
+--
+-- RETURNS:     void
+--
+-- NOTES:
+-- This function is called first. It will zoom the map in on BCIT.
+-- This funcion will also style the map.
+----------------------------------------------------------------------*/
 function initMap() {
 
   var mapOptions = {
 
     zoom: 14,
     center: {
-      lat: 49.249889599999996,
-      lng: -123.00167519999998
+      lat: 49.2498895,
+      lng: -123.0016751
     },
 
     styles: [{
@@ -160,8 +177,29 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 }
+
 setInterval(loop, 1000);
 
+/*----------------------------------------------------------------------
+-- FUNCTION:	  loop
+--
+-- DATE:        April 5, 2018
+--
+-- DESIGNER:    Vafa Dehghan Saei
+--
+-- PROGRAMMER:  Vafa Dehghan Saei
+--
+-- INTERFACE: 	function loop()
+--
+-- ARGUMENT:    void
+--
+--
+-- RETURNS:     void
+--
+-- NOTES:
+-- This function is called every second and it will parse through the JSON file
+-- and store the location and names of all connected clients and display them.
+----------------------------------------------------------------------*/
 function loop() {
 
   var Httpreq = new XMLHttpRequest();
@@ -207,7 +245,7 @@ function loop() {
 
       markers.push(marker);
 
-      var lat_lon = new google.maps.LatLng(x, y); // mac_49.249889599999996_-123.00167519999998_
+      var lat_lon = new google.maps.LatLng(x, y);
       marker.setPosition(lat_lon);
 
     }
@@ -216,6 +254,25 @@ function loop() {
 
 }
 
+/*----------------------------------------------------------------------
+-- FUNCTION:	  setMapOnAll
+--
+-- DATE:        April 5, 2018
+--
+-- DESIGNER:    Vafa Dehghan Saei
+--
+-- PROGRAMMER:  Vafa Dehghan Saei
+--
+-- INTERFACE: 	function setMapOnAll(map)
+--
+-- ARGUMENT:    map - an object to represent a map
+--
+--
+-- RETURNS:     void
+--
+-- NOTES:
+-- This function will go through all the markers and display them on the map.
+----------------------------------------------------------------------*/
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
