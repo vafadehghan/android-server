@@ -1,6 +1,9 @@
 <html>
 
 <head>
+  <title>
+    Friend Locator
+  </title>
 </head>
 
 <body>
@@ -9,18 +12,16 @@
   </h1>
   <div id="map" style="width:100%; height:90%; position: absolute; top: 10%; left: 0px;">
   </div>
-
-<script>
-var response = prompt("What is the password?");
-var map = document.getElementById('map');
-if(response!="dc4985"){
-    map.parentNode.removeChild(map);
-    alert("Wrong Password");
-  }
-</script>
+  <script>
+    var response = prompt("What is the password?");
+    var map = document.getElementById('map');
+    if (response != "dc4985") {
+      map.parentNode.removeChild(map);
+      alert("Wrong Password");
+    }
+  </script>
   <script src="/map.js">
   </script>
-
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIOKzYVMP70n5eBOVWmg-Qac3YedLim7E&callback=initMap">
   </script>
 </body>
