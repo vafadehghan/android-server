@@ -30,11 +30,11 @@ var path = require('path');
 var app = express();
 var clients = {};
 var now = new Date();
-var client = function(name, x, y, ip) {
+var client = function(name, latitude, longitude, ip) {
   return {
     "name": name,
-    "x": x,
-    "y": y,
+    "latitude": latitude,
+    "longitude": longitude,
     "ip": ip
   };
 };
@@ -107,14 +107,14 @@ function newConnection(connection) {
       var message = data.split("_");
 
       var name = message[0];
-      var client_x = message[1];
-      var client_y = message[2];
+      var latitude = message[1];
+      var longitude = message[2];
 
-      console.log("-> " + name + " x:" + client_x + " y:" + client_y + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+      console.log("-> " + name + " latitude:" + latitude + " longitude:" + longitude + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
       clients[connection.remoteAddress].name = name;
-      clients[connection.remoteAddress].x = client_x;
-      clients[connection.remoteAddress].y = client_y;
+      clients[connection.remoteAddress].latitude = latitude;
+      clients[connection.remoteAddress].longitude = longitude;
     }
   }
 

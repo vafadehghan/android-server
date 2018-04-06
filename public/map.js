@@ -217,8 +217,8 @@ function loop() {
 
       var t = json[i][j];
 
-      x = t.x;
-      y = t.y;
+      x = t.latitude;
+      y = t.longitude;
       name = t.name;
       var title = '' + t.ip.substring(7) + ' ' + name;
       console.log("name: " + name + " (" + x + "," + y + ")");
