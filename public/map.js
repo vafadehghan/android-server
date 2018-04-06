@@ -20,8 +20,8 @@
 --  This script will show a map that is centered on BCIT.
 --  The script will parse through the JSON file and display the markers on the map.
 ---------------------------------------------------------------------------------------*/
-var x = 0;
-var y = 0;
+var latitude = 0;
+var longitude = 0;
 var name;
 var markers = [];
 var map;
@@ -217,16 +217,16 @@ function loop() {
 
       var t = json[i][j];
 
-      x = t.latitude;
-      y = t.longitude;
+      latitude = t.latitude;
+      longitude = t.longitude;
       name = t.name;
       var title = '' + t.ip.substring(7) + ' ' + name;
-      console.log("name: " + name + " (" + x + "," + y + ")");
+      console.log("name: " + name + " (" + latitude + "," + longitude + ")");
 
       var marker = new google.maps.Marker({
         position: {
-          lat: parseInt(x),
-          lng: parseInt(y)
+          lat: parseInt(latitude),
+          lng: parseInt(longitude)
         },
         map: map,
         label: {
@@ -245,7 +245,7 @@ function loop() {
 
       markers.push(marker);
 
-      var lat_lon = new google.maps.LatLng(x, y);
+      var lat_lon = new google.maps.LatLng(latitude, longitude);
       marker.setPosition(lat_lon);
 
     }
