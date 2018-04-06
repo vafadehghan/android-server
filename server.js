@@ -102,20 +102,20 @@ function newConnection(connection) {
   function clientConnected(d) {
     console.log('Address: ' + remoteAddress + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
     console.log('Data: ' + d + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
+    if (d != " ") {
+      var data = "" + d;
+      var message = data.split("_");
 
-    var data = "" + d;
-    var message = data.split("_");
+      var name = message[0];
+      var client_x = message[1];
+      var client_y = message[2];
 
-    var name = message[0];
-    var client_x = message[1];
-    var client_y = message[2];
+      console.log("-> " + name + " x:" + client_x + " y:" + client_y + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
 
-    console.log("-> " + name + " x:" + client_x + " y:" + client_y + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds());
-
-    clients[connection.remoteAddress].name = name;
-    clients[connection.remoteAddress].x = client_x;
-    clients[connection.remoteAddress].y = client_y;
-
+      clients[connection.remoteAddress].name = name;
+      clients[connection.remoteAddress].x = client_x;
+      clients[connection.remoteAddress].y = client_y;
+    }
   }
 
   /*----------------------------------------------------------------------

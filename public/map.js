@@ -1,15 +1,33 @@
+/*---------------------------------------------------------------------------------------
+--	SOURCE FILE: map.js - This file will deal with drawing and removing map markers
+--
+--	PROGRAM:     Location Finder
+--
+--	DATE:        April 5, 2018
+--
+--	FUNCTIONS:
+--					function newConnection(connection)
+--					function clientConnected(d)
+--          function clientDisconnect()
+--					function error(err)
+--
+--
+--	DESIGNERS:		Vafa Dehghan Saei
+--
+--	PROGRAMMERS:	Vafa Dehghan Saei
+--
+--
+--	NOTES:
+--  This program will create a server that will listen on port 9000.
+--  The program will make an entry into the client dictionary with the location and name of the client.
+--  It will then add the location and name to the JSON file which will be read by the map.
+--  Once the client is disconnected the entry is removed from the JSON.
+---------------------------------------------------------------------------------------*/
 var x = 0;
 var y = 0;
 var name;
 var markers = [];
 var map;
-
-function clearOverlays() {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-  markers.length = 0;
-}
 
 function initMap() {
 
@@ -142,7 +160,6 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
 }
-
 setInterval(loop, 1000);
 
 function loop() {
@@ -195,7 +212,6 @@ function loop() {
 
     }
   }
-
   setMapOnAll(map);
 
 }
