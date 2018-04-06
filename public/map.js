@@ -154,7 +154,8 @@ function loop() {
 
   json = JSON.parse(Httpreq.responseText);
 
-  deleteMarkers();
+  setMapOnAll(null);
+  markers = [];
 
   for (i in json) {
     for (j in json[i]) {
@@ -164,7 +165,7 @@ function loop() {
       x = t.x;
       y = t.y;
       name = t.name;
-      var title = '' + t.ip.substring(7) +' ' + name;
+      var title = '' + t.ip.substring(7) + ' ' + name;
       console.log("name: " + name + " (" + x + "," + y + ")");
 
       var marker = new google.maps.Marker({
@@ -196,32 +197,12 @@ function loop() {
   }
 
   setMapOnAll(map);
-  showMarkers();
 
 }
-
-
-// GMAPS TOOLS
 
 // Sets the map on all markers in the array.
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
-}
-
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-  setMapOnAll(null);
-}
-
-// Shows any markers currently in the array.
-function showMarkers() {
-  setMapOnAll(map);
-}
-
-// Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-  clearMarkers();
-  markers = [];
 }
